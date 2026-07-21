@@ -1,0 +1,1180 @@
+<!-- PBA-VERIFIED-2026-07-21 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PBA Scuba Program — Course Packet</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f4f8; color: #1a2332; min-height: 100vh; }
+header { background: #003366; color: white; padding: 12px 20px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+header h1 { font-size: 1rem; font-weight: 600; }
+header span { font-size: 0.78rem; opacity: 0.7; margin-left: auto; }
+.progress-bar { display: flex; background: #002244; padding: 8px 16px; gap: 4px; overflow-x: auto; position: sticky; top: 46px; z-index: 199; }
+.progress-bar button { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 0.7rem; cursor: default; white-space: nowrap; padding: 3px 8px; border-radius: 20px; font-family: inherit; }
+.progress-bar button.done { color: #7dd8a0; }
+.progress-bar button.active { color: white; background: rgba(255,255,255,0.2); }
+.step { display: none; max-width: 800px; margin: 0 auto; padding: 20px 16px 80px; }
+.step.active { display: block; }
+h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; color: #003366; }
+.subtitle { color: #5a6a7a; font-size: 0.88rem; margin-bottom: 18px; }
+.card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+h3 { font-size: 0.95rem; font-weight: 600; color: #003366; margin: 16px 0 10px; }
+.course-btn { display: flex; align-items: center; gap: 14px; width: 100%; padding: 16px 18px; background: white; border: 2px solid #e0e8f0; border-radius: 12px; cursor: pointer; text-align: left; margin-bottom: 10px; transition: all 0.15s; font-family: inherit; }
+.course-btn:hover { border-color: #003366; background: #f0f5fb; }
+.course-btn .icon { font-size: 1.6rem; flex-shrink: 0; }
+.course-btn .title { font-weight: 600; font-size: 0.92rem; }
+.course-btn .desc { font-size: 0.78rem; color: #7a8a9a; margin-top: 2px; }
+.badge { margin-left:auto; font-size:0.68rem; padding:3px 8px; border-radius:20px; font-weight:600; white-space:nowrap; flex-shrink:0; }
+.badge.avail { background:#e8f5e9; color:#2e7d32; }
+.form-row { margin-bottom: 12px; }
+.form-row label { display:block; font-size:0.76rem; font-weight:600; color:#4a5a6a; margin-bottom:4px; text-transform:uppercase; letter-spacing:.03em; }
+.req { color: #e53935; }
+.form-row input, .form-row select { width:100%; padding:9px 11px; border:1.5px solid #d0dae4; border-radius:7px; font-size:0.93rem; font-family:inherit; color:#1a2332; background:white; transition:border-color .15s; -webkit-appearance:none; }
+.form-row input:focus, .form-row select:focus { outline:none; border-color:#003366; box-shadow:0 0 0 3px rgba(0,51,102,.1); }
+.form-row input.err, .form-row select.err { border-color:#e53935 !important; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media(max-width:460px){ .two-col { grid-template-columns:1fr; } }
+.btn { display:inline-block; padding:11px 26px; border-radius:8px; font-size:.92rem; font-weight:600; cursor:pointer; border:none; font-family:inherit; transition:all .15s; }
+.btn-primary { background:#003366; color:white; }
+.btn-primary:hover:not(:disabled) { background:#004488; }
+.btn-primary:disabled { background:#a0b0c0; cursor:not-allowed; }
+.btn-secondary { background:white; color:#003366; border:2px solid #003366; }
+.btn-secondary:hover { background:#f0f5fb; }
+.btn-row { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+.notice { background:#e3f2fd; border-left:4px solid #1976d2; border-radius:0 8px 8px 0; padding:11px 14px; font-size:.83rem; color:#0d47a1; margin-bottom:14px; line-height:1.5; }
+.notice.warn { background:#fff3e0; border-color:#f57c00; color:#e65100; }
+.notice.success { background:#e8f5e9; border-color:#2e7d32; color:#1b5e20; }
+.med-toast { position:fixed; bottom:72px; right:16px; max-width:300px; z-index:500; background:#fff8e1; border:1.5px solid #f9a825; border-left:4px solid #f57f17; border-radius:10px; padding:12px 14px; box-shadow:0 4px 18px rgba(0,0,0,0.18); display:none; gap:10px; align-items:flex-start; }
+.med-toast.show { display:flex; }
+.med-toast-body strong { font-size:.86rem; color:#e65100; display:block; margin-bottom:4px; }
+.med-toast-body p { font-size:.76rem; color:#5d4037; line-height:1.45; }
+.med-toast-close { background:none; border:none; cursor:pointer; font-size:1rem; color:#999; flex-shrink:0; padding:0; }
+#pdfContainer { background:#666; border-radius:8px; overflow:hidden; margin-bottom:16px; }
+.page-wrap { position:relative; display:block; border-bottom:4px solid #555; line-height:0; }
+.page-wrap:last-child { border-bottom:none; }
+.page-wrap canvas { display:block; width:100%; }
+.page-overlay { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+.cb-yes, .cb-no { position:absolute; width:22px; height:22px; border-radius:3px; border:2px solid rgba(100,100,200,0.6); background:rgba(255,255,255,0.88); cursor:pointer; pointer-events:all; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; transition:all 0.1s; box-shadow:0 1px 3px rgba(0,0,0,0.15); z-index:10; transform:translate(-50%,-50%); }
+.cb-yes.checked { background:rgba(229,57,53,0.92); border-color:#b71c1c; color:white; }
+.cb-no.checked  { background:rgba(46,125,50,0.92);  border-color:#1b5e20; color:white; }
+.cb-yes:not(.checked):hover, .cb-no:not(.checked):hover { border-color:#003366; background:rgba(220,235,255,0.9); }
+.cb-single { position:absolute; width:20px; height:20px; border-radius:3px; border:2px solid rgba(0,80,160,0.5); background:rgba(255,255,255,0.85); cursor:pointer; pointer-events:all; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; z-index:10; }
+.cb-single.checked { background:rgba(0,80,160,0.85); border-color:#003366; color:white; }
+.cb-req:not(.checked) { border:2.5px solid #c62828; background:rgba(198,40,40,0.10); box-shadow:0 0 0 2px rgba(198,40,40,0.18); }
+.cb-req-label { position:absolute; font-size:10px; font-weight:700; color:#c62828; background:rgba(255,255,255,0.92); border:1px solid #c62828; border-radius:3px; padding:1px 4px; pointer-events:none; z-index:11; white-space:nowrap; }
+.rb-btn { position:absolute; width:20px; height:20px; border-radius:50%; border:2px solid rgba(100,100,200,0.6); background:rgba(255,255,255,0.88); cursor:pointer; pointer-events:all; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; z-index:10; transform:translate(-50%,-50%); }
+.rb-btn.checked { background:rgba(0,80,160,0.85); border-color:#003366; color:white; }
+.field-input { position:absolute; pointer-events:all; background:rgba(173,216,230,0.35); border:1px solid rgba(0,102,204,0.5); border-radius:2px; color:#000; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; outline:none; padding:0 3px; z-index:10; }
+.field-input:focus { background:rgba(173,216,230,0.6); border-color:#003366; }
+.field-input.auto { background:rgba(100,200,100,0.10); border:1px solid rgba(100,180,100,0.25); pointer-events:none; color:#1a2332; font-weight:600; }
+.sig-btn { position:absolute; pointer-events:all; background:rgba(255,235,59,0.85); border:2px dashed #f57f17; border-radius:4px; cursor:pointer; font-size:0.72rem; font-weight:600; color:#5d4037; display:flex; align-items:center; justify-content:center; gap:4px; z-index:10; transition:background 0.15s; }
+.sig-btn:hover { background:rgba(255,235,59,1); }
+.sig-btn.signed { background:rgba(255,255,255,0.95); border:1.5px solid #388e3c; padding:0; overflow:hidden; }
+.sig-btn.signed img { width:100%; height:100%; object-fit:contain; display:block; }
+.sig-btn.signed:hover::after { content:'✏️ tap to re-sign'; position:absolute; inset:0; background:rgba(255,255,255,0.82); display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:700; color:#003366; }
+.field-counter { position:sticky; bottom:0; background:#003366; color:white; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; font-size:0.85rem; gap:12px; z-index:50; }
+.field-counter span { opacity:0.85; }
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; display:none; align-items:center; justify-content:center; }
+.modal-bg.open { display:flex; }
+.modal { background:white; border-radius:16px; padding:20px; width:min(520px,96vw); max-height:90vh; overflow-y:auto; }
+.modal h3 { font-size:1rem; margin-bottom:12px; }
+.sig-modal-box { border:2px solid #003366; border-radius:8px; background:#f8fafc; overflow:hidden; margin-bottom:10px; }
+.sig-modal-box canvas { display:block; width:100%; touch-action:none; }
+.modal-btns { display:flex; gap:8px; justify-content:flex-end; }
+.modal-btns button { padding:8px 18px; border-radius:6px; border:none; font-family:inherit; font-weight:600; cursor:pointer; font-size:0.85rem; }
+.modal-btns .clear-btn  { background:#f5f5f5; color:#555; border:1.5px solid #ddd; }
+.modal-btns .cancel-btn { background:#f5f5f5; color:#555; border:1.5px solid #ddd; }
+.modal-btns .done-btn   { background:#003366; color:white; }
+.spinner { width:44px; height:44px; border:4px solid #e0e8f0; border-top-color:#003366; border-radius:50%; animation:spin .8s linear infinite; margin:40px auto 18px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.done-icon { font-size:3.5rem; text-align:center; margin:40px 0 14px; }
+.sig-record { background:#f0f4f8; border:1.5px solid #b0bec5; border-radius:8px; padding:16px 18px; margin-top:22px; text-align:left; font-size:.82rem; color:#263238; }
+.sig-record h4 { margin:0 0 10px; font-size:.88rem; color:#003366; letter-spacing:.03em; text-transform:uppercase; }
+.sig-record table { width:100%; border-collapse:collapse; }
+.sig-record td { padding:4px 0; vertical-align:top; }
+.sig-record td:first-child { font-weight:600; color:#455a64; width:38%; padding-right:8px; white-space:nowrap; }
+.sig-record td:last-child { word-break:break-all; color:#1a1a2e; }
+.sig-record .rec-note { margin-top:10px; font-size:.76rem; color:#607d8b; font-style:italic; }
+.notice.med-alert { background:#fff8e1; border-color:#f9a825; border-left:4px solid #e65100; color:#33270a; }
+.med-ack-row { display:flex; align-items:flex-start; gap:10px; margin-top:14px; }
+.med-ack-row input[type=checkbox] { margin-top:3px; width:18px; height:18px; flex-shrink:0; accent-color:#c62828; cursor:pointer; }
+.med-ack-row label { font-size:.86rem; line-height:1.45; cursor:pointer; color:#33270a; }
+.med-download { display:inline-block; margin-top:12px; padding:8px 14px; background:#003366; color:#fff; border-radius:6px; text-decoration:none; font-size:.84rem; font-weight:600; }
+.med-download:hover { background:#004fa3; }
+.center { text-align:center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🤿 PBA Scuba Program</h1>
+  <span id="headerCourse"></span>
+</header>
+<div class="progress-bar" id="progressBar">
+  <button data-step="1">① Course</button>
+  <button data-step="2">② Your Info</button>
+  <button data-step="3">③ Fill &amp; Sign Packet</button>
+  <button data-step="4">④ Submit</button>
+</div>
+
+<div id="medToast" class="med-toast">
+  <div class="med-toast-body">
+    <strong>⚕️ Physician Approval May Be Required</strong>
+    <p>Based on your answers, you may need physician clearance before diving. Please contact your instructor before your first in-water session. You can still complete and submit this packet.</p>
+  </div>
+  <button class="med-toast-close" onclick="dismissMedAlert()">&#x2715;</button>
+</div>
+
+<div class="step active" id="step1">
+  <h2 style="margin-top:20px">Select Your Course</h2>
+  <p class="subtitle">You will fill out and sign your official PADI packet on screen.</p>
+  <button class="course-btn" onclick="selectCourse('scuba1')">
+    <span class="icon">&#127891;</span>
+    <div><div class="title">Scuba I &#8212; HHP-1071-01</div><div class="desc">Introduction to scuba diving</div></div>
+    <span class="badge avail">Available</span>
+  </button>
+  <button class="course-btn" onclick="selectCourse('scuba2')">
+    <span class="icon">&#128309;</span>
+    <div><div class="title">Scuba II &#8212; HHP-1071-02</div><div class="desc">Continuing scuba education</div></div>
+    <span class="badge avail">Available</span>
+  </button>
+</div>
+
+<div class="step" id="step2">
+  <h2 style="margin-top:20px">Student Information</h2>
+  <p class="subtitle">Enter your info &mdash; it will auto-fill throughout your packet.</p>
+  <div class="card">
+    <h3 style="margin-top:0">Participant</h3>
+    <div class="two-col">
+      <div class="form-row"><label>First Name <span class="req">*</span></label><input type="text" id="firstName" placeholder="First name" autocomplete="given-name"></div>
+      <div class="form-row"><label>Last Name <span class="req">*</span></label><input type="text" id="lastName" placeholder="Last name" autocomplete="family-name"></div>
+    </div>
+    <div class="two-col">
+      <div class="form-row">
+        <label>Date of Birth <span class="req">*</span></label>
+        <input type="date" id="dob" onchange="onDobChange()">
+        <div id="minorBadge" style="display:none;margin-top:5px;font-size:.78rem;font-weight:600;color:#e65100;background:#fff3e0;border:1px solid #ffb74d;border-radius:5px;padding:4px 8px;">Warning: Minor &mdash; parent/guardian signature required</div>
+      </div>
+      <div class="form-row">
+        <label>Gender <span class="req">*</span></label>
+        <select id="gender"><option value="">Select&hellip;</option><option value="Male">Male</option><option value="Female">Female</option></select>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="form-row"><label>Phone <span class="req">*</span></label><input type="tel" id="phone" placeholder="Phone" autocomplete="tel"></div>
+      <div class="form-row"><label>Email <span class="req">*</span></label><input type="email" id="email" placeholder="Email" autocomplete="email"></div>
+    </div>
+    <div class="form-row"><label>Street Address <span class="req">*</span></label><input type="text" id="address" placeholder="Street address" autocomplete="street-address"></div>
+    <div class="two-col">
+      <div class="form-row"><label>City <span class="req">*</span></label><input type="text" id="city" placeholder="City" autocomplete="address-level2"></div>
+      <div class="form-row two-col">
+        <div><label>State <span class="req">*</span></label><input type="text" id="state" placeholder="FL" autocomplete="off" maxlength="2" style="text-transform:uppercase"></div>
+        <div><label>ZIP <span class="req">*</span></label><input type="text" id="zip" placeholder="ZIP code" autocomplete="off" inputmode="numeric" maxlength="10"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Course</h3>
+    <div class="form-row"><label>Enrolled In</label><input type="text" id="courseDisplay" readonly style="background:#f5f7fa;color:#5a6a7a;"></div>
+    <div class="form-row"><label>Semester</label><input type="text" id="semesterDisplay" readonly style="background:#f5f7fa;color:#5a6a7a;"></div>
+  </div>
+  <div class="card" id="guardianCard" style="display:none">
+    <h3 style="margin-top:0">Parent / Guardian</h3>
+    <div class="notice warn">Parent or guardian must be present and will sign on the next screen.</div>
+    <div class="form-row"><label>Parent / Guardian Full Name <span class="req">*</span></label><input type="text" id="guardianName" placeholder="Parent or guardian full name"></div>
+    <div class="form-row"><label>Guardian Email <span class="req">*</span></label><input type="email" id="guardianEmail" placeholder="Guardian email address" autocomplete="email"></div>
+    <div class="form-row"><label>Guardian Phone <span class="req">*</span></label><input type="tel" id="guardianPhone" placeholder="Guardian phone number" autocomplete="tel" inputmode="tel"></div>
+  </div>
+  <div class="card" id="pathwayCard" style="display:none">
+    <h3 style="margin-top:0">Course Pathway <span class="req">*</span></h3>
+    <div class="form-row">
+      <label>Select your Scuba II pathway</label>
+      <select id="pathwaySelect" onchange="selectPathway(this.value)" style="width:100%;padding:10px;font-size:1rem;border:1.5px solid #b0bec5;border-radius:6px;">
+        <option value="">— Choose a pathway —</option>
+        <option value="Advanced Open Water">Advanced Open Water</option>
+        <option value="Dive Package">Dive Package</option>
+        <option value="Rescue">Rescue</option>
+        <option value="Divemaster Part 1">Divemaster Part 1</option>
+        <option value="Divemaster Part 2">Divemaster Part 2</option>
+        <option value="Undecided">Undecided</option>
+      </select>
+    </div>
+    <div id="pathwayErr" style="display:none;color:#c62828;font-size:.82rem;margin-top:8px">Please select a pathway to continue.</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Diver Credentials <span style="font-weight:400;font-size:0.88em;color:#666">(fill in what applies)</span></h3>
+    <div class="form-row"><label>Highest Cert Level</label><input type="text" id="certLevel" placeholder="e.g. Advanced Open Water Diver" autocomplete="off"></div>
+    <div class="form-row"><label>Cert Agency</label><input type="text" id="certAgency" placeholder="e.g. PADI, SDI, NAUI" autocomplete="off"></div>
+    <div class="form-row"><label>EAN (Nitrox) Cert #</label><input type="text" id="eanCert" placeholder="EAN cert # (if applicable)" autocomplete="off"></div>
+    <div class="form-row"><label>EAN Agency</label><input type="text" id="eanAgency" placeholder="e.g. PADI" autocomplete="off"></div>
+    <div class="form-row"><label>DAN Insurance #</label><input type="text" id="danNumber" placeholder="DAN policy # (if applicable)" autocomplete="off"></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Emergency Contact</h3>
+    <div class="form-row"><label>Name <span class="req">*</span></label><input type="text" id="emergencyName" placeholder="Emergency contact name"></div>
+    <div class="two-col">
+      <div class="form-row"><label>Relationship</label><input type="text" id="emergencyRel" placeholder="e.g. Spouse, Parent"></div>
+      <div class="form-row"><label>Phone <span class="req">*</span></label><input type="tel" id="emergencyPhone" placeholder="Emergency phone"></div>
+    </div>
+  </div>
+  <div id="step2Err" class="notice warn" style="display:none">Please fill in all required fields (*).</div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="goToStep(1)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="validateStep2()">Continue to Packet &rarr;</button>
+  </div>
+</div>
+
+<div class="step" id="step3">
+  <h2 style="margin-top:20px">Complete Your Packet</h2>
+  <p class="subtitle">Fill in and sign every page below. Scroll through all pages before submitting.</p>
+  <div class="notice">Tap <strong>Y</strong> or <strong>N</strong> on each medical question. Tap the yellow banner to sign. Green fields are auto-filled.</div>
+  <div id="pdfLoading" class="notice" style="background:#f5f5f5;border-color:#ccc;color:#555;">Loading your packet&hellip;</div>
+  <div id="pdfContainer"></div>
+  <div class="field-counter" id="fieldCounter" style="display:none">
+    <span id="counterText">Fill in all fields above</span>
+    <button class="btn btn-primary" id="btnSubmitPacket" onclick="goToStep(4)" disabled>Submit &rarr;</button>
+  </div>
+</div>
+
+<div class="step" id="step4">
+  <div class="spinner"></div>
+  <div class="center"><h2>Submitting&hellip;</h2><p class="subtitle" id="processingMsg" style="margin-top:8px">Preparing your documents.</p></div>
+</div>
+
+<div class="step" id="step5">
+  <div class="done-icon">&#x2705;</div>
+  <div class="center">
+    <h2>Packet Submitted!</h2>
+    <p class="subtitle" style="margin-top:8px">Your packet has been received and is on file.</p>
+    <button id="btnDownload" onclick="downloadPacket()" style="margin-top:20px;padding:13px 26px;background:#003366;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;">&#x1F4E5; Download Your Completed Packet</button>
+    <div id="doneAlertNote" style="display:none;margin-top:16px">
+      <div class="notice med-alert" style="text-align:left">
+        <strong>&#x26A0;&#xFE0F; Medical Clearance Required</strong><br><br>
+        You indicated <em>yes</em> to one or more medical conditions on your questionnaire. You must obtain physician clearance <strong>before participating in any in-water training.</strong><br><br>
+        Take all three pages of the Diver Medical Form &mdash; the Participant Questionnaire and the Physician&rsquo;s Evaluation Form &mdash; to your physician for a medical evaluation. <strong>Participation in a diving course requires your physician&rsquo;s approval.</strong><br><br>
+        <a class="med-download" href="https://www.padi.com/sites/default/files/documents/2020-08/10346E_Diver_Medical_Form.pdf" target="_blank" rel="noopener">&#x1F4E5; Download PADI Diver Medical Form</a>
+        <div class="med-ack-row" style="margin-top:16px">
+          <input type="checkbox" id="medAckCB" onchange="document.getElementById('medAckErr').style.display='none'">
+          <label for="medAckCB">I understand that I must obtain physician clearance and provide documentation to my instructor <strong>before my first day of in-water training.</strong></label>
+        </div>
+        <div id="medAckErr" style="display:none;color:#c62828;font-size:.82rem;margin-top:6px;font-weight:600">&#x26A0; Please check this box to acknowledge before leaving this page.</div>
+      </div>
+    </div>
+    <div class="sig-record" id="sigRecord" style="display:none">
+      <h4>&#x1F512; Electronic Signature Record</h4>
+      <table id="sigRecordTable"></table>
+      <p class="rec-note">This record is generated at time of submission and serves as proof of signing for liability purposes.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="sigModal">
+  <div class="modal">
+    <h3 id="sigModalTitle">Sign Here</h3>
+    <p id="sigModalHint" style="display:none;font-size:.78rem;color:#666;margin-bottom:8px;">Previous signature loaded &mdash; tap <strong>Done</strong> to reuse, or <strong>Clear</strong> to redraw.</p>
+    <div class="sig-modal-box"><canvas id="sigModalCanvas" height="180"></canvas></div>
+    <div class="modal-btns">
+      <button class="clear-btn"  onclick="clearModalSig()">Clear</button>
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="done-btn"   onclick="acceptModalSig()">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js"></script>
+<script>
+const PDF_BASE_PATH   = 'pdfs/';
+const INSTRUCTOR_NAME = 'Brandon Cannon';
+const FACILITY_NAME   = 'Kyalami Divers';
+
+const COURSES = {
+  scuba1: { name:'Scuba I (HHP-1071-01)',  file:'PBA Scuba I Online Packet.pdf', requiresSigs:true  },
+  scuba2: { name:'Scuba II (HHP-1071-02)', file:'PBA Scuba II Online Packet.pdf', requiresSigs:true }
+};
+
+const MED_P2_FIELDS = [
+  {yes:'Yes',no:'No'},{yes:'Yes_2',no:'No_2'},{yes:'Yes_3',no:'No_3'},
+  {yes:'Yes_4',no:'No_4'},{yes:'Yes_5',no:'No_5'},{yes:'Yes_6',no:'No_6'},
+  {yes:'Si',no:'No_7'},{yes:'Yes_7',no:'No_8'},{yes:'Yes_8',no:'No_9'},
+  {yes:'Yes_9',no:'No_10'}
+];
+const MED_P3_FIELDS = [
+  {yes:'Yes_10',no:'No_11'},{yes:'Yes_11',no:'No_12'},{yes:'Yes_12',no:'No_13'},{yes:'Yes_13',no:'No_14'},{yes:'Yes_14',no:'No_15'},
+  {yes:'undefined',no:'undefined_2'},{yes:'Yes_16',no:'No_17'},{yes:'Yes_17',no:'No_18'},{yes:'Yes_18',no:'No_19'},
+  {yes:'Yes_19',no:'No_20'},{yes:'Yes_20',no:'No_21'},{yes:'Yes_21',no:'No_22'},{yes:'Yes_22',no:'No_23'},{yes:'Yes_22',no:'No_23'},
+  {yes:'undefined_3',no:'undefined_4'},{yes:'Yes_24',no:'No_25'},{yes:'Yes_25',no:'No_26'},{yes:'Yes_26',no:'No_27'},{yes:'Yes_27',no:'No_28'},
+  {yes:'Yes_28',no:'No_29'},{yes:'Yes_29',no:'No_30'},{yes:'Yes_30',no:'No_31'},{yes:'Yes_31',no:'No_32'},
+  {yes:'Yes_32',no:'No_33'},{yes:'Yes_33',no:'No_34'},{yes:'Yes_34',no:'No_35'},{yes:'Yes_35',no:'No_36'},{yes:'Yes_45',no:'No_50'},
+  {yes:'Yes_37',no:'No_38'},{yes:'Yes_38',no:'No_39'},{yes:'Yes_39',no:'No_40'},{yes:'Yes_40',no:'No_41'},{yes:'Yes_41',no:'No_42'},{yes:'Yes_42',no:'No_43'}
+];
+
+const P2_CB = [
+  // [yes_cx,yes_cy,no_cx,no_cy] — page 1 (A4 595×842), Q1–Q10
+  // Y is averaged between Yes and No positions so both buttons sit in the same visual row
+  [507.4,282.2,548.5,282.2],  // Q1  → Box A
+  [507.4,310.2,548.5,310.2],  // Q2  → Box B
+  [505.9,342.8,548.5,342.8],  // Q3  * physician eval
+  [507.4,367.1,548.5,367.1],  // Q4  → Box C
+  [505.9,399.6,548.5,399.6],  // Q5  * physician eval
+  [505.9,423.9,548.5,423.9],  // Q6  → Box D
+  [505.9,451.6,548.5,451.6],  // Q7  → Box E
+  [505.9,481.4,548.5,481.4],  // Q8  → Box F
+  [505.9,510.1,548.5,510.1],  // Q9  → Box G
+  [505.9,544.0,548.5,544.0],  // Q10 * physician eval
+];
+const P3_CB = [
+  // [yes_cx,yes_cy,no_cx,no_cy] — page 2 (A4 595×842), Boxes A–G
+  // Box A (items 0–4)
+  [519.6,130.2,552.1,130.2],[519.6,148.7,552.1,148.7],[519.6,170.4,552.1,170.4],[519.6,189.9,552.1,189.9],[519.6,203.2,552.1,203.2],
+  // Box B (items 5–8)
+  [519.6,240.0,552.1,240.0],[519.6,254.5,552.1,254.5],[519.6,269.0,552.1,269.0],[519.6,290.7,552.1,290.7],
+  // Box C (items 9–12)
+  [519.6,338.6,552.1,338.6],[519.6,353.1,552.1,353.1],[519.6,367.6,552.1,367.6],[519.6,381.0,552.1,381.0],
+  // Box D (items 13–17)
+  [519.6,418.2,552.1,418.2],[519.6,432.6,552.1,432.6],[519.6,447.0,552.1,447.0],[519.6,461.5,552.1,461.5],[519.6,475.2,552.1,475.2],
+  // Box E (items 18–21)
+  [519.6,513.0,552.1,513.0],[519.6,531.9,552.1,531.9],[519.6,550.0,552.1,550.0],[519.6,564.6,552.1,564.6],
+  // Box F (items 22–26)
+  [519.6,602.3,552.1,602.3],[519.6,617.6,552.1,617.6],[519.6,630.5,552.1,630.5],[519.6,644.7,552.1,644.7],[519.6,659.0,552.1,659.0],
+  // Box G (items 27–32)
+  [519.6,696.8,552.1,696.8],[519.6,712.1,552.1,712.1],[519.6,724.9,552.1,724.9],[519.6,739.9,552.1,739.9],[519.6,753.1,552.1,753.1],[519.6,767.7,552.1,767.7],
+];
+
+const P3_BOXES = [
+  // y0/y1 are page-2 (A4) PDF coords for the gray "not required" banner
+  {label:'Box A', start:0,  count:5, requiredByQ:[0], y0:107, y1:218},
+  {label:'Box B', start:5,  count:4, requiredByQ:[1], y0:218, y1:316},
+  {label:'Box C', start:9,  count:4, requiredByQ:[3], y0:316, y1:396},
+  {label:'Box D', start:13, count:5, requiredByQ:[5], y0:396, y1:491},
+  {label:'Box E', start:18, count:4, requiredByQ:[6], y0:491, y1:580},
+  {label:'Box F', start:22, count:5, requiredByQ:[7], y0:580, y1:675},
+  {label:'Box G', start:27, count:6, requiredByQ:[8], y0:675, y1:785},
+];
+
+const MED_ALERT_P2_IDX = [2,4,9];
+
+let currentStep=1, selectedCourse=null, pdfBytes=null, medAlertDismissedCount=0, submittedAt='';
+const ans = { medP2:new Array(10).fill(null), medP3:new Array(33).fill(null), insurance:null, sigs:{}, reqCBs:{}, metadata:{}, pathway:null };
+let p3CBEls=[], p3BannerEls=[], modalPad=null, modalTarget=null, modalCallback=null, modalHasExisting=false;
+
+function getSemester(){
+  const m=new Date().getMonth()+1, y=new Date().getFullYear();
+  if(m>=8&&m<=12) return 'Fall '+y;
+  return 'Spring '+y;
+}
+
+function goToStep(n){
+  document.getElementById('step'+currentStep).classList.remove('active');
+  currentStep=n;
+  document.getElementById('step'+n).classList.add('active');
+  updateProgressBar();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===4) doSubmit();
+}
+function updateProgressBar(){
+  document.querySelectorAll('.progress-bar button').forEach(btn=>{
+    const s=parseInt(btn.dataset.step);
+    btn.classList.remove('active','done');
+    if(s===currentStep) btn.classList.add('active');
+    else if(s<currentStep) btn.classList.add('done');
+  });
+}
+
+function selectCourse(id){
+  selectedCourse={id,...COURSES[id]};
+  document.getElementById('headerCourse').textContent=selectedCourse.name;
+  document.getElementById('courseDisplay').value=selectedCourse.name;
+  document.getElementById('semesterDisplay').value=getSemester();
+  // Show pathway card only for Scuba II
+  document.getElementById('pathwayCard').style.display=id==='scuba2'?'':'none';
+  // Reset pathway selection if switching courses
+  if(id==='scuba1'){ ans.pathway=null; const ps=document.getElementById('pathwaySelect'); if(ps) ps.value=''; }
+  goToStep(2);
+}
+
+function selectPathway(name){
+  ans.pathway=name||null;
+  document.getElementById('pathwayErr').style.display='none';
+}
+
+function getIsMinor(){
+  const dob=document.getElementById('dob').value; if(!dob) return false;
+  const d=new Date(dob),now=new Date(); let age=now.getFullYear()-d.getFullYear();
+  const mo=now.getMonth()-d.getMonth();
+  if(mo<0||(mo===0&&now.getDate()<d.getDate())) age--;
+  return age<18;
+}
+function onDobChange(){
+  const minor=getIsMinor();
+  document.getElementById('guardianCard').style.display=minor?'':'none';
+  document.getElementById('minorBadge').style.display=minor?'':'none';
+}
+
+function validateStep2(){
+  const req=['firstName','lastName','dob','gender','phone','email','address','city','state','zip','emergencyName','emergencyPhone'];
+  if(getIsMinor()) req.push('guardianName','guardianEmail','guardianPhone');
+  let ok=true;
+  req.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el.value.trim()){
+      el.classList.add('err');
+      el.addEventListener('input',()=>el.classList.remove('err'),{once:true});
+      el.addEventListener('change',()=>el.classList.remove('err'),{once:true});
+      ok=false;
+    }
+  });
+  document.getElementById('step2Err').style.display=ok?'none':'';
+  if(!ok){document.querySelector('.err').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  // Pathway required for Scuba II
+  if(selectedCourse&&selectedCourse.id==='scuba2'&&!ans.pathway){
+    document.getElementById('pathwayErr').style.display='';
+    document.getElementById('pathwayCard').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  goToStep(3); loadAndRenderPDF();
+}
+
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+function pickPdfFile(name){
+  return new Promise(resolve=>{
+    const msg=document.getElementById('pdfLoading');
+    msg.innerHTML='<strong>Local testing mode</strong> &mdash; select the PDF to continue.<br><small>Looking for: <em>'+name+'</em></small><br><br><input type="file" accept=".pdf" id="pdfPicker" style="font-size:.9rem">';
+    msg.className='notice warn';
+    document.getElementById('pdfPicker').onchange=e=>{
+      const file=e.target.files[0]; if(!file) return resolve(null);
+      msg.className='notice'; msg.textContent='Loading your packet...';
+      file.arrayBuffer().then(resolve);
+    };
+  });
+}
+
+async function loadAndRenderPDF(){
+  ans.medP2.fill(null); ans.medP3.fill(null); ans.insurance=null; ans.sigs={};
+  medAlertDismissedCount=0; p3CBEls=[]; p3BannerEls=[];
+  dismissMedAlert();
+  const loading=document.getElementById('pdfLoading');
+  const container=document.getElementById('pdfContainer');
+  container.innerHTML=''; loading.style.display='';
+  try{
+    let rawBytes;
+    try{
+      const resp=await fetch(PDF_BASE_PATH+selectedCourse.file);
+      if(!resp.ok) throw new Error('HTTP '+resp.status);
+      rawBytes=await resp.arrayBuffer();
+    }catch(e){
+      rawBytes=await pickPdfFile(selectedCourse.file);
+      if(!rawBytes){loading.textContent='No file selected.';return;}
+    }
+    pdfBytes=new Uint8Array(rawBytes);
+    const pdfDoc=await pdfjsLib.getDocument({data:pdfBytes.slice()}).promise;
+    loading.style.display='none';
+    document.getElementById('fieldCounter').style.display='';
+    const SCALE=3;
+    const pageOverlayData=[];
+    for(let i=1;i<=pdfDoc.numPages;i++){
+      const page=await pdfDoc.getPage(i);
+      const vp0=page.getViewport({scale:1});
+      const vp=page.getViewport({scale:SCALE});
+      const wrap=document.createElement('div'); wrap.className='page-wrap';
+      const canvas=document.createElement('canvas');
+      canvas.width=Math.round(vp.width); canvas.height=Math.round(vp.height);
+      canvas.style.width='100%'; canvas.style.height='auto';
+      await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+      wrap.appendChild(canvas);
+      const overlay=document.createElement('div'); overlay.className='page-overlay';
+      wrap.appendChild(overlay);
+      const scale=container.clientWidth/vp0.width;
+      buildPageOverlay(i,overlay,scale);
+      pageOverlayData.push({pageNum:i,overlay,pdfW:vp0.width});
+      container.appendChild(wrap);
+    }
+    // Rebuild overlays if container width changes (e.g. scrollbar appears)
+    let lastW=container.clientWidth;
+    new ResizeObserver(()=>{
+      const w=container.clientWidth; if(w===lastW) return; lastW=w;
+      pageOverlayData.forEach(({pageNum,overlay,pdfW})=>{
+        overlay.innerHTML='';
+        buildPageOverlay(pageNum,overlay,w/pdfW);
+      });
+    }).observe(container);
+    updateCounter();
+  }catch(err){
+    loading.innerHTML='Could not load PDF: '+err.message;
+    loading.className='notice warn'; console.error(err);
+  }
+}
+
+function buildPageOverlay(pageNum,overlay,scale){
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const fullName=(g('firstName')+' '+g('lastName')).trim();
+  const dobDMY=formatDobDMY(g('dob'));
+  const todayDMY=formatTodayDMY();
+  const isMinor=getIsMinor();
+  const guardName=g('guardianName');
+  const danNumber=g('danNumber');
+  const eanCert=g('eanCert');
+  const eanAgency=g('eanAgency');
+  const certLevel=g('certLevel');
+  const certAgency=g('certAgency');
+  const eanLabel=[eanAgency,eanCert].filter(Boolean).join(' ');
+  // Date range: today → today+1 year  e.g. 07/17/2026-07/17/2027
+  const diveRange=(()=>{const n=new Date(),f=new Date(n);f.setFullYear(f.getFullYear()+1);const p=d=>[(d.getMonth()+1).toString().padStart(2,'0'),d.getDate().toString().padStart(2,'0'),d.getFullYear()].join('/');return p(n)+'-'+p(f);})();
+  const cid=selectedCourse.id;
+
+  const pos=(el,x0,y0,x1,y1,minH)=>{
+    el.style.left=(x0*scale)+'px'; el.style.top=(y0*scale)+'px';
+    el.style.width=((x1-x0)*scale)+'px';
+    el.style.height=Math.max((y1-y0)*scale,minH||0)+'px';
+  };
+  const autoLabel=(text,x0,y0,x1,y1)=>{
+    if(!text) return;
+    const inp=document.createElement('input');
+    inp.type='text'; inp.value=text; inp.readOnly=true; inp.className='field-input auto';
+    inp.style.fontSize=Math.max(Math.round(9*scale),8)+'px';
+    pos(inp,x0,y0,x1,y1,14); overlay.appendChild(inp);
+  };
+  const editInput=(ph,x0,y0,x1,y1)=>{
+    const inp=document.createElement('input');
+    inp.type='text'; inp.placeholder=ph; inp.className='field-input';
+    inp.style.fontSize=Math.max(Math.round(9*scale),8)+'px';
+    pos(inp,x0,y0,x1,y1,14); overlay.appendChild(inp); return inp;
+  };
+  const addCBPair=(cxy,cny,cnx,cny2,arr,idx,onExtra)=>{
+    const [cx_yes,cy_yes,cx_no,cy_no]=[cxy,cny,cnx,cny2];
+    const SZ=28;
+    const make=(cx,cy,type)=>{
+      const btn=document.createElement('div');
+      btn.className=type==='yes'?'cb-yes':'cb-no';
+      btn.style.left=(cx*scale)+'px'; btn.style.top=(cy*scale)+'px';
+      btn.style.width=SZ+'px'; btn.style.height=SZ+'px';
+      btn.style.fontSize='10px';
+      overlay.appendChild(btn); return btn;
+    };
+    const yBtn=make(cx_yes,cy_yes,'yes'); const nBtn=make(cx_no,cy_no,'no');
+    const refresh=()=>{
+      const v=arr[idx];
+      yBtn.textContent=v==='yes'?'✓':'Yes'; yBtn.classList.toggle('checked',v==='yes');
+      nBtn.textContent=v==='no' ?'✓':'No';  nBtn.classList.toggle('checked',v==='no');
+    };
+    yBtn.onclick=()=>{arr[idx]=arr[idx]==='yes'?null:'yes';refresh();updateCounter();if(onExtra)onExtra();};
+    nBtn.onclick=()=>{arr[idx]=arr[idx]==='no'?null:'no'; refresh();updateCounter();if(onExtra)onExtra();};
+    refresh(); return{yBtn,nBtn};
+  };
+  const addCBPairFromCoords=(coords,arr,idx,onExtra)=>addCBPair(coords[0],coords[1],coords[2],coords[3],arr,idx,onExtra);
+  const addSingleCB=(x0,y0,x1,y1)=>{
+    const btn=document.createElement('div'); btn.className='cb-single'; let checked=false;
+    pos(btn,x0,y0,x1,y1,18);
+    btn.onclick=()=>{checked=!checked;btn.classList.toggle('checked',checked);btn.textContent=checked?'✓':'';};
+    overlay.appendChild(btn);
+  };
+  const addRadioPair=(cx_yes,cy_yes,cx_no,cy_no)=>{
+    const SZ=20;
+    const make=(cx,cy)=>{
+      const btn=document.createElement('div'); btn.className='rb-btn';
+      btn.style.left=(cx*scale)+'px'; btn.style.top=(cy*scale)+'px';
+      btn.style.width=SZ+'px'; btn.style.height=SZ+'px';
+      overlay.appendChild(btn); return btn;
+    };
+    const yBtn=make(cx_yes,cy_yes); const nBtn=make(cx_no,cy_no);
+    const refresh=()=>{
+      yBtn.classList.toggle('checked',ans.insurance==='yes'); yBtn.textContent=ans.insurance==='yes'?'●':'';
+      nBtn.classList.toggle('checked',ans.insurance==='no');  nBtn.textContent=ans.insurance==='no'?'●':'';
+    };
+    yBtn.onclick=()=>{ans.insurance='yes';refresh();};
+    nBtn.onclick=()=>{ans.insurance='no'; refresh();};
+    refresh();
+  };
+  const addSigBtn=(sigKey,label,x0,y0,x1,y1,minH)=>{
+    const btn=document.createElement('div'); btn.className='sig-btn';
+    pos(btn,x0,y0,x1,y1,minH||28);
+    btn.style.fontSize=Math.max(Math.round(8*scale),8)+'px';
+    refreshSigBtn(btn,sigKey,label);
+    btn.onclick=()=>openModal(sigKey,label,url=>{ans.sigs[sigKey]=url;refreshSigBtn(btn,sigKey,label);updateCounter();});
+    overlay.appendChild(btn);
+  };
+
+  const addReqCB=(key,x0,y0,x1,y1)=>{
+    const btn=document.createElement('div'); btn.className='cb-single cb-req';
+    pos(btn,x0,y0,x1,y1,18);
+    const ref=()=>{const v=ans.reqCBs[key];btn.classList.toggle('checked',!!v);btn.textContent=v?'✓':'';};
+    btn.onclick=()=>{ans.reqCBs[key]=!ans.reqCBs[key];ref();updateCounter();};
+    ref(); overlay.appendChild(btn);
+    // 'Required' label above the checkbox
+    const lbl=document.createElement('div'); lbl.className='cb-req-label';
+    lbl.textContent='★ Required';
+    lbl.style.left=btn.style.left;
+    lbl.style.top=(parseFloat(btn.style.top)-17)+'px';
+    overlay.appendChild(lbl);
+  };
+
+  if(pageNum===1){
+    // Diver Medical — Q1–Q10 (page 1, A4 595×842)
+    const onP1=()=>{checkMedAlert();updateP3Boxes();};
+    P2_CB.forEach((c,i)=>addCBPairFromCoords(c,ans.medP2,i,onP1));
+    autoLabel(todayDMY,    363.6,641.4,546.1,661.9);  // Date (dd/mm/yyyy)
+    autoLabel(fullName,     46.8,674.5,345.2,695.0);  // Participant Name (Print)
+    autoLabel(dobDMY,      363.6,674.5,546.1,695.0);  // Birthdate (dd/mm/yyyy)
+    // Instructor Name and Facility Name are pre-printed in the PDF — no overlay needed
+    const mKey=isMinor?'guardian':'participant';
+    const mLbl=isMinor?'Parent/Guardian Signature':'Participant Signature';
+    addSigBtn(mKey,mLbl,   46.8,641.8,345.2,662.3,20);
+  }
+
+  if(pageNum===2){
+    // Diver Medical — Boxes A–G (page 2, A4 595×842)
+    autoLabel(fullName, 109.2,27.7,291.7,48.2);  // Participant Name
+    autoLabel(dobDMY,   353.2,27.7,563.7,48.2);  // Birthdate
+    p3CBEls=[]; p3BannerEls=[];
+    P3_CB.forEach((c,i)=>{
+      const els=addCBPairFromCoords(c,ans.medP3,i,()=>{checkMedAlert();updateCounter();});
+      p3CBEls.push(els);
+    });
+    P3_BOXES.forEach((box,bi)=>{
+      const banner=document.createElement('div');
+      banner.style.cssText='position:absolute;left:0;width:100%;top:'+(box.y0*scale)+'px;height:'+((box.y1-box.y0)*scale)+'px;background:rgba(220,220,220,0.72);display:flex;align-items:center;justify-content:center;font-size:'+Math.max(11*scale,10)+'px;font-weight:700;color:#666;pointer-events:none;z-index:15;border-top:2px dashed #bbb;border-bottom:2px dashed #bbb;';
+      banner.textContent='checkmark '+box.label+' not required (answered NO above)';
+      overlay.appendChild(banner); p3BannerEls.push(banner);
+    });
+    updateP3Boxes();
+  }
+
+  if(pageNum===3){
+    if(cid==='scuba1'){
+      // Non-Agency Disclosure + Liability Release (PADI 10072, Letter 612×792)
+      autoLabel(fullName,  47.7,278.5,263.6,292.6);   // "I, ___" Liability Release
+      autoLabel(fullName, 324.1,515.8,568.6,526.0);   // "I, ___" BY THIS INSTRUMENT
+      addSigBtn('participant','Participant Signature',  39.9,699.5,435.9,714.7, 15);
+      autoLabel(todayDMY, 446.3,699.9,565.3,713.3);
+      if(isMinor){
+        addSigBtn('guardian','Parent/Guardian Signature', 39.9,723.2,434.8,742.0, 19);
+        autoLabel(todayDMY, 445.4,725.7,565.3,740.8);
+      }
+    } else {
+      // Continuing Education Administrative Document p.1 (PADI 10038, Letter 612×792)
+      // Name only — signature block is on p.4 of this document (packet page 4)
+      autoLabel(fullName, 32.6,194.7,295.5,214.1);    // Participant Name — "I, ___"
+    }
+  }
+
+  if(pageNum===4){
+    if(cid==='scuba1'){
+      // Standard Safe Diving Practices Statement of Understanding (PADI 10060, Letter 612×792)
+      autoLabel(fullName, 62.3,187.6,317.4,209.6);    // PRINT NAME
+      addSigBtn('participant','Participant Signature',  49.6,678.6,351.0,700.0, 21);
+      autoLabel(todayDMY, 387.0,678.6,558.0,700.0);
+      if(isMinor){
+        addSigBtn('guardian','Parent/Guardian Signature', 49.6,711.7,351.0,733.1, 21);
+        autoLabel(todayDMY, 387.0,711.7,558.0,733.1);
+      }
+    } else {
+      // Continuing Education Administrative Document p.2 (PADI 10038, Letter 612×792)
+      autoLabel(fullName,  34.1, 82.3,264.5,101.7);   // Participant Name — top of page
+      autoLabel(fullName,  31.6,563.5,280.2,582.9);   // "I ___ HAVE COMPLETED..."
+      autoLabel(fullName,  30.7,612.9,279.2,632.3);   // "I, ___ BY THIS INSTRUMENT..."
+      addSigBtn('participant','Participant Signature',  30.0,706.0,452.0,722.0, 16);
+      autoLabel(todayDMY, 459.2,707.2,582.7,721.2);
+      if(isMinor){
+        addSigBtn('guardian','Parent/Guardian Signature', 30.0,736.0,452.0,750.0, 14);
+        autoLabel(todayDMY, 459.2,736.2,582.7,750.2);
+      }
+    }
+  }
+
+  if(pageNum===5){
+    // Enriched Air (Nitrox) Diver Training Release — page 1 of 2 (PADI 10078, Letter 612×792)
+    autoLabel(fullName, 62.9,297.7,290.0,316.1);    // "I, [name] hereby affirm..."
+  }
+
+  if(pageNum===6){
+    // Enriched Air (Nitrox) Diver Training Release — page 2 of 2 (PADI 10078, Letter 612×792)
+    autoLabel(fullName,  43.4, 79.7,270.5, 98.2);   // Participant Name (top of page)
+    autoLabel(fullName,  36.0,200.5,536.0,221.9);   // Participant Name (PLEASE PRINT)
+    addSigBtn('participant','Participant Signature',  36.3,234.4,408.0,254.8, 20);
+    autoLabel(todayDMY, 424.9,232.1,539.9,253.4);
+    if(isMinor){
+      addSigBtn('guardian','Parent/Guardian Signature', 36.3,264.9,408.6,286.4, 21);
+    } else {
+      addSigBtn('participant','Participant Signature',  36.3,264.9,408.6,286.4, 21);
+    }
+    autoLabel(todayDMY, 424.9,263.5,539.9,284.9);
+    // Diver Accident Insurance radio buttons (YES=226.65, NO=178.6)
+    if(danNumber&&!ans.insurance) ans.insurance='yes';
+    addRadioPair(226.65,320.25,178.6,320.25);
+    if(danNumber) autoLabel(danNumber,348.7,303.0,510.2,324.4);
+    else editInput('Policy #',348.7,303.0,510.2,324.4);
+  }
+
+  // Page 7: Equipment Use and Lease Agreement — text only, no overlay needed
+  // Page 9 (Scuba I only): Vessel Liability Release text — no form fields, no overlay needed
+
+  if(pageNum===8){
+    // Equipment Use and Lease Agreement — identical in both packets
+    autoLabel(fullName,   73.6,221.3,223.6,243.3);
+    addSigBtn('participant','Participant Signature', 228.6,222.3,421.7,244.3, 22);
+    autoLabel(todayDMY,  429.0,221.8,531.2,243.8);
+    if(isMinor){
+      autoLabel(guardName, 73.1,259.6,223.1,281.6);
+      addSigBtn('guardian','Parent/Guardian Signature', 229.7,259.6,421.7,283.2, 22);
+      autoLabel(todayDMY,  429.1,259.8,531.3,281.8);
+    }
+  }
+
+  if(pageNum===9 && isMinor){
+    // Youth Diving: Responsibility and Risks Acknowledgment (PADI 10615) — minor only, both courses
+    autoLabel(guardName,  74.9,185.4,267.4,203.9);   // Guardian Name (top)
+    autoLabel(fullName,  369.2,185.4,568.6,203.9);   // Participant/Minor Name (top)
+    autoLabel(guardName,  48.0,629.2,237.1,647.6);   // Parent/Guardian printed name
+    addSigBtn('guardian','Parent/Guardian Signature', 266.5,629.2,455.9,647.6, 18);
+    autoLabel(todayDMY,  478.1,629.2,563.6,647.6);   // Guardian date
+    autoLabel(fullName,   48.0,655.2,237.1,673.7);   // Participant/Minor printed name
+    addSigBtn('participant','Participant/Minor Signature', 266.5,654.8,455.9,673.7, 19);
+    autoLabel(todayDMY,  478.1,655.2,563.6,673.7);   // Minor date
+  }
+
+  if(pageNum===10 && isMinor){
+    // Florida Addendum — Notice to Minor Child's Parent or Natural Guardian (PADI 10348) — minor only, both courses
+    addSigBtn('guardian','Parent/Guardian Signature', 26.4,645.5,446.7,667.0, 21);
+    autoLabel(todayDMY,  462.0,645.8,582.0,667.1);   // Guardian date
+    autoLabel(fullName,   27.0,720.8,447.0,742.1);   // Minor Child Name
+    autoLabel(dobDMY,    462.0,720.8,582.0,742.1);   // Minor Birth Date
+  }
+
+}
+
+function refreshSigBtn(btn,sigKey,label){
+  if(ans.sigs[sigKey]){
+    btn.classList.add('signed');
+    btn.innerHTML='<img src="'+ans.sigs[sigKey]+'" alt="'+label+'">';
+  } else {
+    btn.classList.remove('signed');
+    btn.innerHTML='Sign here — '+label;
+  }
+}
+
+function isBoxRequired(box){return box.requiredByQ.some(qi=>ans.medP2[qi]==='yes');}
+function updateP3Boxes(){
+  if(!p3BannerEls.length) return;
+  P3_BOXES.forEach((box,bi)=>{
+    const req=isBoxRequired(box);
+    p3BannerEls[bi].style.display=req?'none':'flex';
+    for(let qi=box.start;qi<box.start+box.count;qi++){
+      const els=p3CBEls[qi]; if(!els) continue;
+      els.yBtn.style.pointerEvents=req?'all':'none';
+      els.nBtn.style.pointerEvents=req?'all':'none';
+      if(!req){ans.medP3[qi]=null;els.yBtn.classList.remove('checked');els.yBtn.textContent='Yes';els.nBtn.classList.remove('checked');els.nBtn.textContent='No';}
+    }
+  });
+  updateCounter();
+}
+
+function checkMedAlert(){
+  const triggers=MED_ALERT_P2_IDX.filter(i=>ans.medP2[i]==='yes').length
+               +ans.medP3.filter(a=>a==='yes').length;
+  if(triggers===0){ medAlertDismissedCount=0; return; }
+  if(triggers>medAlertDismissedCount){
+    document.getElementById('medToast').classList.add('show');
+    document.getElementById('doneAlertNote').style.display='';
+  }
+}
+function dismissMedAlert(){
+  const t=MED_ALERT_P2_IDX.filter(i=>ans.medP2[i]==='yes').length+ans.medP3.filter(a=>a==='yes').length;
+  medAlertDismissedCount=t;
+  document.getElementById('medToast').classList.remove('show');
+}
+
+function updateCounter(){
+  const isMinor=getIsMinor();
+  const p2Done=ans.medP2.filter(a=>a!==null).length, p2Total=10;
+  let p3Total=0,p3Done=0;
+  P3_BOXES.forEach(box=>{
+    if(isBoxRequired(box)){
+      p3Total+=box.count;
+      for(let qi=box.start;qi<box.start+box.count;qi++) if(ans.medP3[qi]!==null) p3Done++;
+    }
+  });
+  let sigTotal=0,sigDone=0;
+  if(selectedCourse&&selectedCourse.requiresSigs){
+    sigTotal=isMinor?2:1;
+    if(ans.sigs['participant']) sigDone++;
+    if(isMinor&&ans.sigs['guardian']) sigDone++;
+  }
+  // Required calendar-year checkboxes (pages 9 and 10)
+  const cid=selectedCourse?selectedCourse.id:null;
+  const reqCBKeys=[];  // No required checkboxes in current Scuba I packet
+  const cbTotal=reqCBKeys.length, cbDone=reqCBKeys.filter(k=>ans.reqCBs[k]).length;
+  const total=p2Total+p3Total+sigTotal+cbTotal, done=p2Done+p3Done+sigDone+cbDone, remaining=total-done;
+  const allDone=remaining===0;
+  document.getElementById('counterText').textContent=allDone?'All fields complete — ready to submit!':remaining+' field'+(remaining===1?'':'s')+' remaining';
+  document.getElementById('btnSubmitPacket').disabled=!allDone;
+}
+
+function openModal(sigKey,label,callback){
+  document.getElementById('sigModalTitle').textContent=label;
+  document.getElementById('sigModal').classList.add('open');
+  modalTarget=sigKey; modalCallback=callback; modalHasExisting=!!ans.sigs[sigKey];
+  const canvas=document.getElementById('sigModalCanvas');
+  canvas.width=canvas.parentElement.clientWidth||480;
+  if(!modalPad) modalPad=new SignaturePad(canvas,{backgroundColor:'rgba(0,0,0,0)',penColor:'#000'});
+  else modalPad.clear();
+  if(ans.sigs[sigKey]){const img=new Image();img.onload=()=>canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);img.src=ans.sigs[sigKey];}
+  const hint=document.getElementById('sigModalHint');
+  if(hint) hint.style.display=modalHasExisting?'':'none';
+}
+function clearModalSig(){if(modalPad)modalPad.clear();modalHasExisting=false;const h=document.getElementById('sigModalHint');if(h)h.style.display='none';}
+function closeModal(){document.getElementById('sigModal').classList.remove('open');modalTarget=null;modalCallback=null;modalHasExisting=false;}
+function acceptModalSig(){
+  const hasNew=modalPad&&!modalPad.isEmpty();
+  if(!hasNew&&!modalHasExisting){alert('Please sign before accepting.');return;}
+  const url=(modalHasExisting&&!hasNew)?ans.sigs[modalTarget]:modalPad.toDataURL('image/png');
+  if(modalCallback) modalCallback(url);
+  closeModal();
+}
+
+async function doSubmit(){
+  const setMsg=m=>document.getElementById('processingMsg').textContent=m;
+  setMsg('Verifying your identity...');
+
+  // Capture public IP
+  let publicIP='Unavailable';
+  try{
+    const res=await fetch('https://api.ipify.org?format=json',{cache:'no-store'});
+    const data=await res.json();
+    publicIP=data.ip||'Unavailable';
+  }catch(e){}
+
+  // Capture timestamp
+  const now=new Date();
+  const tzName=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const tsStr=now.toLocaleString('en-US',{month:'2-digit',day:'2-digit',year:'numeric',
+    hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZoneName:'short'});
+
+  // Parse user agent into readable form
+  const ua=navigator.userAgent;
+  let device='Unknown device', browser='Unknown browser';
+  if(/iPhone/.test(ua)) device='iPhone';
+  else if(/iPad/.test(ua)) device='iPad';
+  else if(/Android/.test(ua)&&/Mobile/.test(ua)) device='Android Phone';
+  else if(/Android/.test(ua)) device='Android Tablet';
+  else if(/Macintosh/.test(ua)) device='Mac';
+  else if(/Windows/.test(ua)) device='Windows PC';
+  else if(/Linux/.test(ua)) device='Linux';
+  if(/CriOS|Chrome/.test(ua)&&!/Edg/.test(ua)) browser='Chrome';
+  else if(/FxiOS|Firefox/.test(ua)) browser='Firefox';
+  else if(/EdgiOS|Edg/.test(ua)) browser='Edge';
+  else if(/Safari/.test(ua)) browser='Safari';
+
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const signerName=(g('firstName')+' '+g('lastName')).trim()||'—';
+  const signerEmail=g('email')||'—';
+
+  // Store metadata
+  ans.metadata={ip:publicIP, timestamp:tsStr, timezone:tzName, device, browser,
+                signerName, signerEmail, rawUA:ua};
+  const medClearance=(MED_ALERT_P2_IDX.some(i=>ans.medP2[i]==='yes')||ans.medP3.some(a=>a==='yes'))?'Yes':'No';
+  ans.formData={
+    firstName:g('firstName'), lastName:g('lastName'), email:signerEmail,
+    dob:g('dob'), gender:g('gender'), phone:g('phone'), address:g('address'),
+    city:g('city'), state:g('state'), zip:g('zip'),
+    course:selectedCourse?selectedCourse.name:'',
+    semester:document.getElementById('semesterDisplay')?.value||'',
+    pathway:ans.pathway||'',
+    guardianName:g('guardianName'), guardianEmail:g('guardianEmail'), guardianPhone:g('guardianPhone'),
+    emergencyName:g('emergencyName'), emergencyRel:g('emergencyRel'), emergencyPhone:g('emergencyPhone'),
+    danNumber:g('danNumber'),
+    certLevel:g('certLevel'), certAgency:g('certAgency'),
+    eanCert:g('eanCert'), eanAgency:g('eanAgency'),
+    medClearance
+  };
+
+  setMsg('Finalizing your packet...');
+  await new Promise(r=>setTimeout(r,800));
+
+  // Populate signature record card
+  const rows=[
+    ['Signer Name', signerName],
+    ['Email', signerEmail],
+    ['Timestamp', tsStr],
+    ['IP Address', publicIP],
+    ['Device', device+' / '+browser],
+  ];
+  const tbl=document.getElementById('sigRecordTable');
+  tbl.innerHTML=rows.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  document.getElementById('sigRecord').style.display='';
+
+  // Generate PDF and submit to Google Drive + Sheets
+  setMsg('Uploading your packet...');
+  try{
+    // Temporarily reveal step3 so html2canvas can capture hidden page-wraps
+    const step3=document.getElementById('step3');
+    const wasHidden=!step3.classList.contains('active');
+    if(wasHidden){ step3.style.display='block'; step3.style.position='fixed'; step3.style.top='-99999px'; step3.style.left='0'; step3.style.pointerEvents='none'; }
+    const pageWraps=document.querySelectorAll('.page-wrap');
+    const {jsPDF}=window.jspdf;
+    const first=await html2canvas(pageWraps[0],{scale:2,useCORS:true,logging:false,allowTaint:true});
+    const pw=first.width/2, ph=first.height/2;
+    const pdf=new jsPDF({orientation:'portrait',unit:'px',format:[pw,ph],compress:true});
+    addStudentSummaryPage(pdf,pw,ph,ans.formData);
+    for(let i=0;i<pageWraps.length;i++){
+      pdf.addPage([pw,ph],'portrait');
+      const c=await html2canvas(pageWraps[i],{scale:2,useCORS:true,logging:false,allowTaint:true});
+      pdf.addImage(c.toDataURL('image/jpeg',0.90),'JPEG',0,0,pw,ph);
+    }
+    if(wasHidden){ step3.style.display=''; step3.style.position=''; step3.style.top=''; step3.style.left=''; step3.style.pointerEvents=''; }
+    const fname=((document.getElementById('firstName')?.value||'')+'_'+(document.getElementById('lastName')?.value||'')).trim().replace(/\s+/g,'_')||'Student';
+    const course=selectedCourse?selectedCourse.id.replace('scuba','Scuba_'):'Packet';
+    const filename=fname+'_'+course+'_Packet.pdf';
+
+    const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+    const SCRIPT_URL='https://script.google.com/macros/s/AKfycbz3NwFNH-OGEBUlPE_CPTqOCpYKwekzTThY_oI7l0yGuvCStIRKuzYCZtA7ZZVWOBXt/exec';
+    const needsMedClearance = MED_ALERT_P2_IDX.some(i=>ans.medP2[i]==='yes') || ans.medP3.some(a=>a==='yes');
+    submittedAt = new Date().toLocaleString('en-US',{month:'2-digit',day:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZoneName:'short'});
+    const signerFullName=(g('firstName')+' '+g('lastName')).trim();
+    addSignatureRecordPage(pdf,pw,ph,signerFullName,signerEmail,publicIP,device+' / '+browser,submittedAt);
+    const pdfBase64=pdf.output('datauristring').split(',')[1];
+    const meta={
+      filename,
+      firstName: g('firstName'), lastName: g('lastName'), email: signerEmail,
+      dob: g('dob'), phone: g('phone'), street: g('address'),
+      city: g('city'), state: g('state'), zip: g('zip'),
+      course: selectedCourse?selectedCourse.name:'', pathway: ans.pathway||'',
+      ip: publicIP, device: device+' / '+browser,
+      medClearance: needsMedClearance ? 'Yes' : 'No'
+    };
+    // Step 1: log metadata to sheet (small payload — no PDF)
+    await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(meta)});
+    // Step 2: upload PDF separately (large payload — allowed to fail silently)
+    try{
+      await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({...meta,pdf:pdfBase64})});
+    }catch(e){ console.warn('PDF upload failed:',e); }
+  }catch(err){
+    console.warn('Upload failed:',err);
+  }
+
+  goToStep(5);
+}
+
+async function downloadPacket(){
+  const btn=document.getElementById('btnDownload');
+  btn.textContent='Generating PDF…'; btn.disabled=true;
+  try{
+    const step3=document.getElementById('step3');
+    const wasHidden=!step3.classList.contains('active');
+    if(wasHidden){ step3.style.display='block'; step3.style.position='fixed'; step3.style.top='-99999px'; step3.style.left='0'; step3.style.pointerEvents='none'; }
+    const pageWraps=document.querySelectorAll('.page-wrap');
+    if(!pageWraps.length){alert('No pages found. Please complete your packet first.');return;}
+    const {jsPDF}=window.jspdf;
+    // Capture first page to get dimensions
+    const first=await html2canvas(pageWraps[0],{scale:2,useCORS:true,logging:false,allowTaint:true});
+    const pw=first.width/2, ph=first.height/2;
+    const pdf=new jsPDF({orientation:'portrait',unit:'px',format:[pw,ph],compress:true});
+    const fd=ans.formData||{};
+    addStudentSummaryPage(pdf,pw,ph,fd);
+    for(let i=0;i<pageWraps.length;i++){
+      pdf.addPage([pw,ph],'portrait');
+      const c=await html2canvas(pageWraps[i],{scale:2,useCORS:true,logging:false,allowTaint:true});
+      pdf.addImage(c.toDataURL('image/jpeg',0.90),'JPEG',0,0,pw,ph);
+    }
+    const fname=((document.getElementById('firstName')?.value||'')+'_'+(document.getElementById('lastName')?.value||'')).trim().replace(/\s+/g,'_')||'Student';
+    const course=selectedCourse?selectedCourse.id.replace('scuba','Scuba_'):'Packet';
+    const m=ans.metadata||{};
+    const dlName=m.signerName||((document.getElementById('firstName')?.value||'')+' '+(document.getElementById('lastName')?.value||'')).trim();
+    const dlEmail=m.signerEmail||'';
+    const dlIP=m.ip||'Unavailable';
+    const dlDevice=(m.device&&m.browser)?(m.device+' / '+m.browser):(m.device||'Unknown');
+    const dlTs=submittedAt||m.timestamp||new Date().toLocaleString('en-US',{month:'2-digit',day:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZoneName:'short'});
+    addSignatureRecordPage(pdf,pw,ph,dlName,dlEmail,dlIP,dlDevice,dlTs);
+    if(wasHidden){ step3.style.display=''; step3.style.position=''; step3.style.top=''; step3.style.left=''; step3.style.pointerEvents=''; }
+    pdf.save(fname+'_'+course+'_Packet.pdf');
+  }catch(e){
+    console.error(e);
+    alert('Could not generate PDF: '+e.message);
+  }finally{
+    btn.innerHTML='&#x1F4E5; Download Your Completed Packet';
+    btn.disabled=false;
+  }
+}
+
+function formatTodayDMY(){const d=new Date();return p2(d.getDate())+'/'+p2(d.getMonth()+1)+'/'+d.getFullYear();}
+function formatDobDMY(iso){if(!iso)return '';const[y,m,d]=iso.split('-');return d+'/'+m+'/'+y;}
+function p2(n){return String(n).padStart(2,'0');}
+
+function addStudentSummaryPage(pdf, pw, ph, fd){
+  if(!fd) fd={};
+  const margin=pw*0.08, cW=pw-margin*2;
+
+  // Navy header
+  pdf.setFillColor(20,40,80);
+  pdf.rect(0,0,pw,ph*0.10,'F');
+  pdf.setTextColor(255,255,255);
+  pdf.setFont('helvetica','bold');
+  pdf.setFontSize(Math.round(pw*0.036));
+  pdf.text('PBA Scuba Program',margin,ph*0.052);
+  pdf.setFont('helvetica','normal');
+  pdf.setFontSize(Math.round(pw*0.016));
+  pdf.text('Student Information Summary',margin,ph*0.077);
+  // Student name + course/pathway — right side of header
+  const displayName=((fd.lastName||'')+(fd.firstName?', '+fd.firstName:'')).trim();
+  const displayCourse=[fd.course,fd.pathway].filter(Boolean).join(' — ');
+  pdf.setTextColor(255,255,255);
+  if(displayName){
+    pdf.setFont('helvetica','bold');
+    pdf.setFontSize(Math.round(pw*0.036));
+    const nw=pdf.getTextWidth(displayName);
+    pdf.text(displayName,pw-margin-nw,ph*0.052);
+  }
+  if(displayCourse){
+    pdf.setFont('helvetica','normal');
+    pdf.setFontSize(Math.round(pw*0.016));
+    const cw=pdf.getTextWidth(displayCourse);
+    pdf.text(displayCourse,pw-margin-cw,ph*0.077);
+  }
+
+  // Navy footer (drawn first so content renders on top)
+  pdf.setFillColor(20,40,80);
+  pdf.rect(0,ph*0.935,pw,ph*0.065,'F');
+  pdf.setTextColor(160,175,200);
+  pdf.setFont('helvetica','normal');
+  pdf.setFontSize(Math.round(pw*0.012));
+  pdf.text('Palm Beach Atlantic University  ·  Scuba Program  ·  Confidential',pw/2,ph*0.967,{align:'center'});
+
+  let y=ph*0.108;
+  const rowH=ph*0.030;
+  const hdrH=ph*0.026;
+  const gap=ph*0.008;
+  const col1=margin, col2=margin+cW*0.38;
+
+  const sectionHeader=(title)=>{
+    pdf.setFillColor(236,241,248);
+    pdf.rect(margin,y,cW,hdrH,'F');
+    pdf.setFillColor(20,40,80);
+    pdf.rect(margin,y,pw*0.005,hdrH,'F');
+    pdf.setFont('helvetica','bold');
+    pdf.setFontSize(Math.round(pw*0.012));
+    pdf.setTextColor(20,40,80);
+    pdf.text(title.toUpperCase(),margin+pw*0.010,y+hdrH*0.72);
+    y+=hdrH+ph*0.004;
+  };
+
+  const addRow=(label,value)=>{
+    if(!value) return;
+    pdf.setFont('helvetica','bold');
+    pdf.setFontSize(Math.round(pw*0.012));
+    pdf.setTextColor(100,110,125);
+    pdf.text(label,col1,y+rowH*0.72);
+    pdf.setFont('helvetica','normal');
+    pdf.setTextColor(15,20,30);
+    pdf.text(String(value),col2,y+rowH*0.72);
+    pdf.setDrawColor(225,228,232);
+    pdf.setLineWidth(0.4);
+    pdf.line(margin,y+rowH,margin+cW,y+rowH);
+    y+=rowH;
+  };
+
+  sectionHeader('Personal Information');
+  addRow('Full Name',(fd.firstName||'')+' '+(fd.lastName||''));
+  addRow('Date of Birth',fd.dob?formatDobDMY(fd.dob):'');
+  if(fd.gender)   addRow('Gender',fd.gender);
+  addRow('Phone',fd.phone);
+  addRow('Email',fd.email);
+  addRow('Address',[fd.address,fd.city,fd.state,fd.zip].filter(Boolean).join(', '));
+
+  if(fd.guardianName){
+    y+=gap;
+    sectionHeader('Parent / Guardian');
+    addRow('Name',fd.guardianName);
+    if(fd.guardianEmail) addRow('Email',fd.guardianEmail);
+    if(fd.guardianPhone) addRow('Phone',fd.guardianPhone);
+  }
+
+  y+=gap;
+  sectionHeader('Emergency Contact');
+  addRow('Name',fd.emergencyName);
+  if(fd.emergencyRel)   addRow('Relationship',fd.emergencyRel);
+  if(fd.emergencyPhone) addRow('Phone',fd.emergencyPhone);
+
+  y+=gap;
+  sectionHeader('Enrollment');
+  addRow('Course',fd.course);
+  if(fd.semester) addRow('Semester',fd.semester);
+  if(fd.pathway)  addRow('Pathway',fd.pathway);
+
+  const hasExtra=fd.danNumber||fd.certLevel||fd.eanCert;
+  if(hasExtra){
+    y+=gap;
+    sectionHeader('Diver Credentials');
+    if(fd.certLevel)  addRow('Certification',[fd.certAgency,fd.certLevel].filter(Boolean).join(' — '));
+    if(fd.eanCert)    addRow('EAN Cert',[fd.eanAgency,fd.eanCert].filter(Boolean).join(' — '));
+    if(fd.danNumber)  addRow('DAN Insurance #',fd.danNumber);
+  }
+
+  y+=gap;
+  sectionHeader('Medical');
+  addRow('Physician Clearance Required',fd.medClearance||'No');
+}
+
+function addSignatureRecordPage(pdf, pw, ph, signerName, email, ipAddr, deviceStr, timestamp){
+  pdf.addPage([pw,ph],'portrait');
+  const margin=pw*0.08, boxX=margin, boxY=ph*0.12;
+  const boxW=pw-margin*2;
+  const headerH=ph*0.055;
+  const rows=[
+    ['Signer Name', signerName||''],
+    ['Email',       email||''],
+    ['Timestamp',   timestamp||''],
+    ['IP Address',  ipAddr||'Unknown'],
+    ['Device',      deviceStr||''],
+  ];
+  const rowH=ph*0.042;
+  const disclaimerH=ph*0.04;
+  const bodyH=rows.length*rowH+ph*0.035+disclaimerH+ph*0.025;
+  const boxH=headerH+bodyH;
+
+  // Box background + border
+  pdf.setFillColor(245,247,250); pdf.setDrawColor(180,195,210); pdf.setLineWidth(0.8);
+  pdf.roundedRect(boxX,boxY,boxW,boxH,6,6,'FD');
+
+  // Header bar (navy)
+  pdf.setFillColor(0,51,102);
+  pdf.roundedRect(boxX,boxY,boxW,headerH,6,6,'F');
+  pdf.setFillColor(0,51,102);
+  pdf.rect(boxX,boxY+headerH-6,boxW,6,'F');
+
+  // Header text
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(Math.max(pw*0.018,8));
+  pdf.setTextColor(255,255,255);
+  pdf.text('ELECTRONIC SIGNATURE RECORD',boxX+boxW/2,boxY+headerH*0.65,{align:'center'});
+
+  // Rows
+  let y=boxY+headerH+ph*0.025;
+  const labelX=boxX+pw*0.025, valueX=boxX+boxW*0.40;
+  const labelSize=Math.max(pw*0.014,7), valueSize=Math.max(pw*0.014,7);
+  rows.forEach(([lbl,val])=>{
+    pdf.setFontSize(labelSize); pdf.setFont('helvetica','bold'); pdf.setTextColor(74,90,106);
+    pdf.text(lbl,labelX,y);
+    pdf.setFontSize(valueSize); pdf.setFont('helvetica','normal'); pdf.setTextColor(26,35,50);
+    pdf.text(String(val),valueX,y);
+    y+=rowH;
+  });
+
+  // Divider line
+  y+=ph*0.008;
+  pdf.setDrawColor(200,210,220); pdf.setLineWidth(0.5);
+  pdf.line(boxX+pw*0.02,y,boxX+boxW-pw*0.02,y);
+  y+=ph*0.018;
+
+  // Disclaimer
+  pdf.setFontSize(Math.max(pw*0.012,6)); pdf.setFont('helvetica','italic'); pdf.setTextColor(100,120,140);
+  pdf.text('This record is generated at time of submission and serves as proof of signing for liability purposes.',labelX,y,{maxWidth:boxW-pw*0.05});
+}
+
+document.addEventListener('DOMContentLoaded',updateProgressBar);
+</script>
+</body>
+</html>
